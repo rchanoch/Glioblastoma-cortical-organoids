@@ -1,12 +1,3 @@
-to_cpm <- function(m) {
-  m <- as.matrix(m)
-  count_sum <- apply(m, 2, sum)
-  m <- (t(t(m)/count_sum)) * 1e+06
-  m <- as(m, "Matrix")
-  return(m)
-}
-
-
 firstup <- function(x) {
   substr(x, 1, 1) <- toupper(substr(x, 1, 1))
   x
@@ -38,47 +29,11 @@ count_to_tpm<- function(matrix)
   return(matrix)
 }
 
-
-
-create_state_piechart<- function(cell_type_list= cell_type_list, order_by=NULL){
-  
-  # calculate the start and end angles for each pie
-  dat<-  get_state_percentages(cell_type_list)
-  colnames(dat)<- c("Cell_Type","Cnt","Channel")
-  
-  dat_pies <- dplyr::left_join(dat,
-                               dat %>% 
-                                 group_by(Channel) %>%
-                                 dplyr::summarize(Cnt_total = sum(Cnt))) %>%
-    group_by(Channel) %>%
-    mutate(end_angle = 2*pi*cumsum(Cnt)/Cnt_total,      # ending angle for each pie slice
-           start_angle = lag(end_angle, default = 0),   # starting angle for each pie slice
-           mid_angle = 0.5*(start_angle + end_angle))   # middle of each pie slice, for the text label
-  
-  rpie = 1 # pie radius
-  rlabel = 0.6 * rpie # radius of the labels; a number slightly larger than 0.5 seems to work better,
-  # but 0.5 would place it exactly in the middle as the question asks for.
-  
-  # draw the pies
-  
-  dat_pies$Cell_Type<- as.factor(dat_pies$Cell_Type)
-  
-  data <- dat_pies %>% 
-    dplyr::arrange(desc(Cell_Type)) %>%
-    dplyr::mutate(prop = Cnt) %>%
-    dplyr::mutate(ypos = cumsum(prop)- 0.5*prop )
-  
-  
-  ggplot(data, aes(x="", y=Cnt, fill=Cell_Type)) +
-    geom_bar(stat="identity", width=1,color="black") +
-    coord_polar("y", start=0)+facet_wrap( ~ Channel, ncol = length(unique(dat_pies$Channel)))+theme_void()+ theme(strip.text = element_text(size = 10))+geom_text(aes(y = ypos, label = Cnt), color = "black", size=4)
-  
-}
-
 split_names<- function(string, position, char)
 {
   return(unlist(lapply(strsplit(string,char,1),"[[",position)))
 }
+
 
 volcano_plot<- function(centered_tpm, cluster_cells=cluster_cells)
 {
