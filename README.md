@@ -1,2 +1,4 @@
 # Glioblastoma-cortical-organoids
-Glioblastoma-cortical organoids recapitulate cell state heterogeneity and intercellular transfer
+
+Code used in Mangena, V*, Chanoch-Myers, R*, et al. Glioblastoma-cortical organoids recapitulate cell state heterogeneity and intercellular transfer
+
