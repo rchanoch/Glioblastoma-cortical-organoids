@@ -192,7 +192,7 @@ NMF_heatmap<- function(NMF_programs=NMF_programs,log_expression_matrix=log_expre
 mouse_to_human<- function(mouse_genes=mouse_genes)
 {
   
-  human_to_mouse<-read.table("/home/labs/tirosh/chanoch/signatures/HMD_HumanPhenotype.rpt.txt",sep="\t",header=F)
+  human_to_mouse<-read.table("HMD_HumanPhenotype.rpt.txt",sep="\t",header=F)
   
   human_to_mouse<- human_to_mouse[,c("V1","V3")]
   colnames(human_to_mouse)<- c("human","mouse")
@@ -210,7 +210,7 @@ mouse_to_human<- function(mouse_genes=mouse_genes)
 human_to_mouse<- function(human_genes=human_genes)
 {
   
-  human_to_mouse<-read.table("/home/labs/tirosh/chanoch/signatures/HMD_HumanPhenotype.rpt.txt",sep="\t",header=F)
+  human_to_mouse<-read.table("HMD_HumanPhenotype.rpt.txt",sep="\t",header=F)
   human_to_mouse<- human_to_mouse[,c("V1","V3")]
   colnames(human_to_mouse)<- c("human","mouse")
   
